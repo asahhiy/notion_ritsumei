@@ -13,8 +13,8 @@ export default function TabLayout() {
   return (
     <NativeTabs>
       <NativeTabs.Trigger name="index">
-        <Label>Home</Label>
-        <Icon sf="house.fill" drawable="custom_android_drawable" />
+        <Label>Schedule</Label>
+        <Icon sf="book.pages.fill" drawable="custom_android_drawable" />
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="add">
         <Icon sf="plus.circle" drawable="custom_settings_drawable" />
