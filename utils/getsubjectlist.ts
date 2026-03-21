@@ -1,0 +1,54 @@
+import { Client } from '@notionhq/client'
+import { SubjectData } from '../types/type'
+
+const notion = new Client({ auth: process.env.EXPO_PUBLIC_NOTION_API_KEY })
+
+
+export default async function getSubjectList() {
+  const response = await notion.dataSources.query({
+    data_source_id: "32a9f424-ebfa-804a-8e49-000b44cfa084"
+  })
+
+  const formattedResults: SubjectData[] = [];
+
+  response.results.forEach((page) => {
+    if (!("properties" in page) || page.object !== "page") {
+      return;
+    }
+    const subjectProp = page.properties.SubjectName;
+    let subjectName = "未設定";
+    // 2. 型ガード: プロパティが「title」型であるかをチェック
+    if (subjectProp.type === "title") {
+      // titleは配列なので、mapを使って各要素の plain_text を抽出し、join("") で結合します
+      subjectName = subjectProp.title.map(t => t.plain_text).join("") || "未設定";
+    }
+    else if (subjectProp.type === "rich_text") {
+      // rich_text型の場合も同様に配列として処理
+      subjectName = subjectProp.rich_text.map(t => t.plain_text).join("") || "未設定";
+    }
+    // --------------------------------------------------
+    // When や Day (select型) の処理はそのまま（単一オブジェクトなので配列処理は不要）
+    // --------------------------------------------------
+    const whenProp = page.properties.When;
+    let when = "未設定";
+    if (whenProp.type === "select") {
+      when = whenProp.select?.name || "未設定";
+    }
+
+    const dayProp = page.properties.Day;
+    let day = "未設定";
+    if (dayProp.type === "select") {
+      day = dayProp.select?.name || "未設定";
+    }
+
+    formattedResults.push({
+      subjectName,
+      when,
+      day,
+    })
+
+    return formattedResults;
+  })
+}
+
+
