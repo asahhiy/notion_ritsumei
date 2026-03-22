@@ -3,9 +3,6 @@ import { FlashList } from "@shopify/flash-list"
 
 const data = [
   {
-    title: ""
-  },
-  {
     title: "月"
   },
   {
@@ -24,8 +21,9 @@ const data = [
 export default function DayDisplay() {
   return (
     <View className="flex-row">
+      <View className="h-[40px] w-[25px] mb-1" />
       {data.map((item) => (
-        <View key={item.title} className="bg-indigo-300 rounded-md mx-1 items-center justify-center h-[40px] w-[50px]">
+        <View key={item.title} className="rounded-md items-center justify-center h-[40px] w-[65px]">
           <Text>{item.title}</Text>
         </View>
       ))}

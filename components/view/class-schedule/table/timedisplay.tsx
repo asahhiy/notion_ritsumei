@@ -25,10 +25,10 @@ export default function TimeDisplay() {
     <View className="flex-col self-start">
       {data.map((item) => (
         <View key={item.time}
-          className="h-[60px] w-[50px] mb-1">
+          className="h-[60px] w-[25px] mb-1">
           <View key={item.time}
-            className="bg-indigo-300
-            h-[60px] w-[50px] mx-1
+            className="
+            h-[60px] w-[25px]
           rounded-md 
           items-center 
           justify-center ">

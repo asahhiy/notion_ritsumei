@@ -1,5 +1,5 @@
 import { Client } from '@notionhq/client'
-import { SubjectData } from '../types/type'
+import { SubjectData, dayOrder } from '../types/type'
 
 const notion = new Client({ auth: process.env.EXPO_PUBLIC_NOTION_API_KEY })
 
@@ -11,16 +11,17 @@ export default async function getSubjectList() {
 
   const formattedResults: SubjectData[] = [];
 
+  let sortedResults: SubjectData[] = [];
   response.results.forEach((page) => {
     if (!("properties" in page) || page.object !== "page") {
       return;
     }
     const subjectProp = page.properties.SubjectName;
-    let subjectName = "未設定";
+    let subjectName = "";
     // 2. 型ガード: プロパティが「title」型であるかをチェック
     if (subjectProp.type === "title") {
       // titleは配列なので、mapを使って各要素の plain_text を抽出し、join("") で結合します
-      subjectName = subjectProp.title.map(t => t.plain_text).join("") || "未設定";
+      subjectName = subjectProp.title.map(t => t.plain_text).join("") || "";
     }
     else if (subjectProp.type === "rich_text") {
       // rich_text型の場合も同様に配列として処理
@@ -47,8 +48,22 @@ export default async function getSubjectList() {
       day,
     })
 
-    return formattedResults;
+    sortedResults = formattedResults.sort((a, b) => {
+      const whenDiff = Number(a.when) - Number(b.when);
+      if (whenDiff !== 0) {
+        return whenDiff;
+      }
+
+      const dayRankA = dayOrder[a.day.toLowerCase()] || 999; // 順序が不明な場合は大きな値を設定
+      const dayRankB = dayOrder[b.day.toLowerCase()] || 999;
+      return dayRankA - dayRankB;
+
+    })
+
   })
+  console.log(sortedResults)
+
+  return sortedResults;
 }
 
 

@@ -3,7 +3,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 export default function NextClassCard() {
 
   return (
-    <View className="h-[100px] w-full bg-yellow-100 rounded-md">
+    <View className="h-[100px] bg-yellow-100 rounded-xl my-1 mx-3">
       <Text className="font-semi-bold text-xl m-4">
         次の授業
       </Text>

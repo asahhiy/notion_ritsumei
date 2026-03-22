@@ -1,4 +1,4 @@
-import { Platform, StyleSheet, View } from 'react-native';
+import { Text, View } from 'react-native';
 
 import ClassScheduleView from '@/components/view/class-schedule-view';
 import NextClassCard from '@/components/view/class-schedule/next-class-card';
@@ -8,10 +8,7 @@ export default function HomeScreen() {
   return (
     <View>
       <View style={{ height: 40 }} />
-      <NextClassCard />
-      <TodayTaskCard />
-      <ClassScheduleView />
-
+      <Text>please subscribe our apps</Text>
     </View>
   );
 }
