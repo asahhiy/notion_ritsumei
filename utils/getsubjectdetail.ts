@@ -3,6 +3,7 @@ import { Client } from "@notionhq/client";
 
 const notion = new Client({
   auth: process.env.EXPO_PUBLIC_NOTION_API_KEY,
+  notionVersion: "2026-03-11",
 });
 
 export async function getSubjectDetail(subjectData: SubjectData) {
@@ -52,19 +53,29 @@ export async function getSubjectDetail(subjectData: SubjectData) {
     return;
   }
 
-  const taskDbId = taskDbBlock.id;
-  const databaseInfo = await notion.databases.retrieve({
-    database_id: taskDbId,
-  });
+  console.log(
+    "これからタスクDBを取得します。タスクDBのブロックID:",
+    taskDbBlock.id,
+  );
 
-  const dataSourceId = databaseInfo.id;
-  console.log("Data Source ID:", dataSourceId);
+  const response = await notion.databases.retrieve({
+    database_id: taskDbBlock.id,
+  });
+  const datasourceId = (response as any).data_sources?.[0].id;
+  if (
+    (response as any).data_sources &&
+    (response as any).data_sources.length > 0
+  ) {
+    console.log("データソースID:取得成功");
+  } else {
+    console.log("データソースIDが見つかりませんでした。");
+  }
 
   //3 タスクDBからタスクを取得
-  const tasksResponse = await notion.dataSources.query({
-    data_source_id: "32c9f424-ebfa-809d-8454-000bb4078c2b",
-  });
-  console.log("taskResponseID:", tasksResponse);
 
+  const tasksResponse = await notion.dataSources.query({
+    data_source_id: datasourceId,
+  });
+  console.log("taskResponse:", JSON.stringify(tasksResponse, null, 2));
   return tasksResponse.results;
 }
