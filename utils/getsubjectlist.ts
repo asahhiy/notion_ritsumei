@@ -1,13 +1,22 @@
-import { Client } from '@notionhq/client'
-import { SubjectData, dayOrder } from '../types/type'
+import { Client } from "@notionhq/client";
+import { SubjectData, dayOrder } from "../types/type";
 
-const notion = new Client({ auth: process.env.EXPO_PUBLIC_NOTION_API_KEY })
-
+const notion = new Client({ auth: process.env.EXPO_PUBLIC_NOTION_API_KEY });
 
 export default async function getSubjectList() {
   const response = await notion.dataSources.query({
-    data_source_id: "32a9f424-ebfa-804a-8e49-000b44cfa084"
-  })
+    data_source_id: "32a9f424-ebfa-804a-8e49-000b44cfa084",
+    filter: {
+      and: [
+        {
+          property: "Semester",
+          select: {
+            equals: "2年前期",
+          },
+        },
+      ],
+    },
+  });
 
   const formattedResults: SubjectData[] = [];
 
@@ -21,11 +30,11 @@ export default async function getSubjectList() {
     // 2. 型ガード: プロパティが「title」型であるかをチェック
     if (subjectProp.type === "title") {
       // titleは配列なので、mapを使って各要素の plain_text を抽出し、join("") で結合します
-      subjectName = subjectProp.title.map(t => t.plain_text).join("") || "";
-    }
-    else if (subjectProp.type === "rich_text") {
+      subjectName = subjectProp.title.map((t) => t.plain_text).join("") || "";
+    } else if (subjectProp.type === "rich_text") {
       // rich_text型の場合も同様に配列として処理
-      subjectName = subjectProp.rich_text.map(t => t.plain_text).join("") || "未設定";
+      subjectName =
+        subjectProp.rich_text.map((t) => t.plain_text).join("") || "未設定";
     }
     // --------------------------------------------------
     // When や Day (select型) の処理はそのまま（単一オブジェクトなので配列処理は不要）
@@ -46,7 +55,7 @@ export default async function getSubjectList() {
       subjectName,
       when,
       day,
-    })
+    });
 
     sortedResults = formattedResults.sort((a, b) => {
       const whenDiff = Number(a.when) - Number(b.when);
@@ -57,13 +66,9 @@ export default async function getSubjectList() {
       const dayRankA = dayOrder[a.day.toLowerCase()] || 999; // 順序が不明な場合は大きな値を設定
       const dayRankB = dayOrder[b.day.toLowerCase()] || 999;
       return dayRankA - dayRankB;
-
-    })
-
-  })
-  console.log(sortedResults)
+    });
+  });
+  console.log(sortedResults);
 
   return sortedResults;
 }
-
-

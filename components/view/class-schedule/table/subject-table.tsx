@@ -1,11 +1,7 @@
-import { Text, View } from "react-native"
-import { FlashList } from "@shopify/flash-list"
-import { SubjectData } from "@/types/type"
-import { Link } from "expo-router"
-
-
-
-
+import { SubjectData } from "@/types/type";
+import { FlashList } from "@shopify/flash-list";
+import { Link } from "expo-router";
+import { View } from "react-native";
 
 export default function SubjectTable({ source }: { source: SubjectData[] }) {
   return (
@@ -17,14 +13,19 @@ export default function SubjectTable({ source }: { source: SubjectData[] }) {
         <View
           className="border-black border rounded-md
           items-center justify-center
-          h-[60px] my-0.5 
-          ">
-          <Link href={{
-            pathname: "/subject-detail",
-            params: item
-          }}>{item.subjectName}</Link>
+          h-[65px] my-0.5 
+          "
+        >
+          <Link
+            href={{
+              pathname: "/subject-detail",
+              params: item,
+            }}
+          >
+            {item.subjectName}
+          </Link>
         </View>
       )}
     />
-  )
+  );
 }
