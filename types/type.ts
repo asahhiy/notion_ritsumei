@@ -1,9 +1,8 @@
 export type SubjectData = {
-  subjectName: string,
-  when: string,
-  day: string,
-}
-
+  subjectName: string;
+  when: string;
+  day: string;
+};
 
 export const dayOrder: Record<string, number> = {
   monday: 1,
@@ -11,4 +10,10 @@ export const dayOrder: Record<string, number> = {
   wednesday: 3,
   thursday: 4,
   friday: 5,
-}
+};
+
+export type TaskDetail = {
+  TaskName: string;
+  Status: string;
+  Due: string;
+};

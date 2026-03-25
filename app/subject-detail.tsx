@@ -1,15 +1,19 @@
-import { View, Text } from 'react-native';
-import { SubjectData } from '@/types/type';
-import { useLocalSearchParams } from 'expo-router';
-
+import TaskList from "@/components/view/tasklist/task-list";
+import { SubjectData } from "@/types/type";
+import { useLocalSearchParams } from "expo-router";
+import { View } from "react-native";
 
 export default function SubjectDetailScreen() {
-  const { subjectName, day, when } = useLocalSearchParams() as SubjectData
+  const { subjectName, day, when } = useLocalSearchParams() as SubjectData;
+  const SubjectData: SubjectData = {
+    subjectName,
+    day,
+    when,
+  };
+
   return (
-    <View>
-      <Text>this is test</Text>
-      <Text >{subjectName}</Text>
-      <Text className='text-2xl text-left'>{day}{when}</Text>
+    <View className="flex-1">
+      <TaskList SubjectData={SubjectData} />
     </View>
-  )
+  );
 }
