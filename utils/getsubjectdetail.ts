@@ -1,7 +1,6 @@
 import { SubjectData, TaskDetail } from "@/types/type";
 import { Client } from "@notionhq/client";
 
-
 const notion = new Client({
   auth: process.env.EXPO_PUBLIC_NOTION_API_KEY,
   notionVersion: "2026-03-11",
@@ -64,14 +63,17 @@ export async function getSubjectDetail(
     const taskName =
       properties["TaskName"]?.title?.[0]?.plain_text || "名称未設定";
 
-    const status = properties["Status"]?.select?.name || "未着手";
+    const status = properties["Status"]?.status?.name || "未着手";
 
     const due = properties["Due"]?.date?.start || "期限未設定";
+
+    const isDue = properties["IsDue"]?.formula?.string || "NotDefined";
 
     return {
       TaskName: taskName,
       Status: status,
       Due: due,
+      IsDue: isDue,
     };
   });
 

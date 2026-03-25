@@ -16,4 +16,5 @@ export type TaskDetail = {
   TaskName: string;
   Status: string;
   Due: string;
+  IsDue: string;
 };
