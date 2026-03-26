@@ -9,6 +9,8 @@ export default function SubjectTable({ source }: { source: SubjectData[] }) {
       data={source}
       numColumns={5}
       scrollEnabled={true}
+      keyExtractor={(item) => item.subjectName}
+      estimatedItemSize={70}
       renderItem={({ item }) => (
         <View
           className="border-black border rounded-md
