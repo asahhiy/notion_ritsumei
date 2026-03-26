@@ -40,7 +40,7 @@ export default function ClassNumberPicker() {
             when: selectedNumber,
           };
 
-          const detail = await getSubjectDetail(subjectData);
+          await getSubjectDetail(subjectData);
         }}
       />
     </View>
