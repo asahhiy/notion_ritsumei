@@ -5,16 +5,16 @@ import { useEffect, useState } from "react";
 import { Button, Text, View } from "react-native";
 
 export default function TaskList({
-  SubjectData,
+  subjectData,
 }: {
-  SubjectData: SubjectData;
+  subjectData: SubjectData;
 }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [taskList, setTaskList] = useState<TaskDetail[]>([]);
   const fetchData = async () => {
     try {
-      const data: TaskDetail[] = await getSubjectDetail(SubjectData);
+      const data: TaskDetail[] = await getSubjectDetail(subjectData);
       setTaskList(data);
       setIsLoading(false);
     } catch (error) {
