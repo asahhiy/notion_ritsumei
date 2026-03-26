@@ -1,15 +1,8 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import React from "react";
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
-import { NativeTabs, Icon, Label } from 'expo-router/unstable-native-tabs';
+import { Icon, Label, NativeTabs } from "expo-router/unstable-native-tabs";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <NativeTabs>
       <NativeTabs.Trigger name="index">
@@ -24,7 +17,10 @@ export default function TabLayout() {
         <Icon sf="gear" drawable="custom_settings_drawable" />
         <Label>Settings</Label>
       </NativeTabs.Trigger>
-
+      <NativeTabs.Trigger name="debug">
+        <Icon sf="ladybug" drawable="custom_settings_drawable" />
+        <Label>Debug</Label>
+      </NativeTabs.Trigger>
     </NativeTabs>
   );
 }
