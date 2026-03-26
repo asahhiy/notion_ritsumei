@@ -4,7 +4,7 @@ export default function NextClassCard() {
 
   return (
     <View className="h-[100px] bg-yellow-100 rounded-xl my-1 mx-3">
-      <Text className="font-semi-bold text-xl m-4">
+      <Text className="font-semibold text-xl m-4">
         次の授業
       </Text>
       <View className="flex-row justify-between">
