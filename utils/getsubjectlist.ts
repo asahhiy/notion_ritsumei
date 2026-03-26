@@ -61,17 +61,17 @@ export default async function getSubjectList() {
       when,
       day,
     });
+  });
 
-    sortedResults = formattedResults.sort((a, b) => {
-      const whenDiff = Number(a.when) - Number(b.when);
-      if (whenDiff !== 0) {
-        return whenDiff;
-      }
+  sortedResults = formattedResults.sort((a, b) => {
+    const whenDiff = Number(a.when) - Number(b.when);
+    if (whenDiff !== 0) {
+      return whenDiff;
+    }
 
-      const dayRankA = dayOrder[a.day.toLowerCase()] || 999; // 順序が不明な場合は大きな値を設定
-      const dayRankB = dayOrder[b.day.toLowerCase()] || 999;
-      return dayRankA - dayRankB;
-    });
+    const dayRankA = dayOrder[a.day.toLowerCase()] || 999; // 順序が不明な場合は大きな値を設定
+    const dayRankB = dayOrder[b.day.toLowerCase()] || 999;
+    return dayRankA - dayRankB;
   });
   console.log(sortedResults);
 
