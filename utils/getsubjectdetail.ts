@@ -2,7 +2,7 @@ import { SubjectData, TaskDetail } from "@/types/type";
 import { Client } from "@notionhq/client";
 
 const notion = new Client({
-  auth: process.env.EXPO_PUBLIC_NOTION_API_KEY,
+  auth: process.env.NOTION_API_KEY,
   notionVersion: "2026-03-11",
 });
 
