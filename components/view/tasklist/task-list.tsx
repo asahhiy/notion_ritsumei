@@ -63,10 +63,10 @@ export default function TaskList({
       <View className=" h-[400px] p-1 justify-start">
         <Button
           title="データ更新"
-          onPress={() => {
-            setIsLoading(true);
-            fetchData();
+          onPress={async () => {
             setIsError(false);
+            setIsLoading(true);
+            await fetchData();
           }}
         />
         <FlashList
