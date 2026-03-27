@@ -1,11 +1,11 @@
 import { allSubjectData_2026_spring } from "@/data/allsubejctdata_2026_spring";
-import { lessons } from "@/db/schema";
+import { lessons } from "@/db/schema"; //schemaファイル
 import { migrateDatabase } from "@/utils/migrate";
 import { drizzle } from "drizzle-orm/expo-sqlite";
 import * as SQLite from "expo-sqlite";
 
 const expoDB = SQLite.openDatabaseSync("my_database.db");
-const db = drizzle(expoDB);
+export const db = drizzle(expoDB);
 
 export async function seedDatabase() {
   try {

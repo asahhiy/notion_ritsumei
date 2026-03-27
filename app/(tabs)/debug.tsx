@@ -1,6 +1,6 @@
 import ClassNumberPicker from "@/components/debug/class-number-picker";
-import { migrateDatabase } from "@/utils/migrate";
 import { seedDatabase } from "@/utils/seed";
+import { getSubjectList } from "@/utils/sqlite/getsubjectlist";
 import { updateLessonData } from "@/utils/updatelessondata";
 import { Button, ScrollView, Text, View } from "react-native";
 
@@ -12,8 +12,8 @@ export default function DebugScreen() {
       <ClassNumberPicker />
 
       <Button
-        title="Execute Migration"
-        onPress={async () => await migrateDatabase()}
+        title="SQLiteいじっちゃう//"
+        onPress={async () => await getSubjectList()}
       />
       <Button
         title="Execute Seeding"

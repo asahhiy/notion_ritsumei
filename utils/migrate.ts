@@ -15,4 +15,5 @@ export async function migrateDatabase() {
       period INTEGER
     );
   `);
+  console.log("マイグレーションが完了しました");
 }
