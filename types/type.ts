@@ -12,6 +12,7 @@ export const dayOrder: Record<string, number> = {
   friday: 5,
 };
 
+//Notion側のカラム名と一致する必要がある
 export type TaskDetail = {
   TaskName: string;
   Status: string;

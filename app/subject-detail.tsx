@@ -5,7 +5,7 @@ import { View } from "react-native";
 
 export default function SubjectDetailScreen() {
   const { subjectName, day, when } = useLocalSearchParams() as SubjectData;
-  const SubjectData: SubjectData = {
+  const subjectData: SubjectData = {
     subjectName,
     day,
     when,
@@ -13,7 +13,7 @@ export default function SubjectDetailScreen() {
 
   return (
     <View className="flex-1">
-      <TaskList SubjectData={SubjectData} />
+      <TaskList subjectData={subjectData} />
     </View>
   );
 }

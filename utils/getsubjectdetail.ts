@@ -1,14 +1,25 @@
 import { SubjectData, TaskDetail } from "@/types/type";
 import { Client } from "@notionhq/client";
 
-const notion = new Client({
-  auth: process.env.NOTION_API_KEY,
-  notionVersion: "2026-03-11",
-});
+function getNotionClient() {
+  const notionApiKey =
+    process.env.EXPO_PUBLIC_NOTION_API_KEY ?? process.env.NOTION_API_KEY;
+  if (!notionApiKey) {
+    throw new Error(
+      "Notion API key is not set. Define EXPO_PUBLIC_NOTION_API_KEY (or NOTION_API_KEY).",
+    );
+  }
+
+  return new Client({
+    auth: notionApiKey,
+    notionVersion: "2026-03-11",
+  });
+}
 
 export async function getSubjectDetail(
   subjectData: SubjectData,
 ): Promise<TaskDetail[]> {
+  const notion = getNotionClient();
   const { subjectName, day, when } = subjectData;
 
   const timetableResponse = await notion.dataSources.query({
