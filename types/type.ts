@@ -1,4 +1,5 @@
 export type SubjectData = {
+  pageId?: string;
   subjectName: string;
   when: string;
   day: string;

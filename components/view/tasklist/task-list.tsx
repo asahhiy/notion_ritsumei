@@ -62,7 +62,7 @@ export default function TaskList({
     <View className="flex-1">
       <View className=" h-[400px] p-1 justify-start">
         <Button
-          title="データ更新"
+          title="タスクデータ更新"
           onPress={async () => {
             setIsError(false);
             setIsLoading(true);

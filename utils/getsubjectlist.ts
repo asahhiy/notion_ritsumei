@@ -51,6 +51,7 @@ export default async function getSubjectList() {
     }
 
     formattedResults.push({
+      pageId: page.id,
       subjectName,
       when,
       day,
