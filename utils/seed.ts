@@ -28,6 +28,9 @@ export async function seedDatabase() {
 
       //JSONを注入
       await db.insert(lessons).values(normalizedLessons);
+      console.log("インポート完了!!!!");
+    } else {
+      console.log("すでにデータがあるからインポートはスキップするわ。");
     }
   } catch (error) {
     console.error("シード処理に失敗してもうたわ。すまん。", error);

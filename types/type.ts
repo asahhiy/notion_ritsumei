@@ -19,3 +19,16 @@ export type TaskDetail = {
   Due: string;
   IsDue: string;
 };
+
+//科目情報更新用の型
+
+export type UpdateSubjectData = {
+  pageId: string;
+  subjectName: string;
+  semester: string;
+  when: number;
+  day: string;
+  place: string;
+  professor: string;
+  syllabusUrl: string;
+};
