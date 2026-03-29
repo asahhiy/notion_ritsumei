@@ -1,48 +1,49 @@
 import { SubjectData, TaskDetail } from "@/types/type";
-import { Client } from "@notionhq/client";
-
-const notion = new Client({
-  auth: process.env.NOTION_API_KEY,
-  notionVersion: "2026-03-11",
-});
+import getNotionClient from "./auth/getNotionClient";
 
 export async function getSubjectDetail(
   subjectData: SubjectData,
 ): Promise<TaskDetail[]> {
-  const { subjectName, day, when } = subjectData;
+  const notion = getNotionClient();
+  const { pageId, day, when } = subjectData;
 
-  const timetableResponse = await notion.dataSources.query({
-    data_source_id: "32a9f424-ebfa-804a-8e49-000b44cfa084",
-    filter: {
-      and: [
-        {
-          property: "When",
-          select: {
-            equals: when,
-          },
-        },
-        {
-          property: "Day",
-          select: {
-            equals: day,
-          },
-        },
-        {
-          property: "Semester",
-          select: {
-            equals: "2年前期",
-          },
-        },
-      ],
-    },
-  });
+  let classPageId = pageId;
 
-  if (timetableResponse.results.length === 0) {
-    console.log("No matching subject found for", subjectData);
-    return [];
+  if (!classPageId) {
+    const timetableResponse = await notion.dataSources.query({
+      data_source_id: "32a9f424-ebfa-804a-8e49-000b44cfa084",
+      filter: {
+        and: [
+          {
+            property: "When",
+            select: {
+              equals: when,
+            },
+          },
+          {
+            property: "Day",
+            select: {
+              equals: day,
+            },
+          },
+          {
+            property: "Semester",
+            select: {
+              equals: "2年前期",
+            },
+          },
+        ],
+      },
+    });
+
+    if (timetableResponse.results.length === 0) {
+      console.log("No matching subject found for", subjectData);
+      return [];
+    }
+
+    classPageId = timetableResponse.results[0].id;
   }
 
-  const classPageId = timetableResponse.results[0].id;
   console.log("クラスページID:", classPageId);
 
   const taskResponse = await notion.dataSources.query({

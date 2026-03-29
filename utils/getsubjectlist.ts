@@ -1,14 +1,8 @@
-import { Client } from "@notionhq/client";
 import { SubjectData, dayOrder } from "../types/type";
+import getNotionClient from "./auth/getNotionClient";
 
-const notionApiKey = process.env.NOTION_API_KEY;
-
-if (!notionApiKey) {
-  throw new Error("NOTION_API_KEY environment variable is not set.");
-}
-
-const notion = new Client({ auth: notionApiKey });
 export default async function getSubjectList() {
+  const notion = getNotionClient();
   const response = await notion.dataSources.query({
     data_source_id: "32a9f424-ebfa-804a-8e49-000b44cfa084",
     filter: {
@@ -57,6 +51,7 @@ export default async function getSubjectList() {
     }
 
     formattedResults.push({
+      pageId: page.id,
       subjectName,
       when,
       day,
