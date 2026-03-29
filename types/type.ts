@@ -33,3 +33,21 @@ export type UpdateSubjectData = {
   professor: string;
   syllabusUrl: string;
 };
+
+//登録科目取得のクエリ用の型
+export type LessonQueryProps = {
+  day: string;
+  period: number;
+  term: string;
+};
+
+export type LessonDataMasterProps = {
+  id: string;
+  fullName: string;
+  instructor: string;
+  room: string;
+  syllabusUrl: string;
+  term: string;
+  day: string;
+  period: number;
+};

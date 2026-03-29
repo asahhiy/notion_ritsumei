@@ -1,14 +1,21 @@
 import { lessons } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { LessonQueryProps } from "@/types/type";
+import { and, eq } from "drizzle-orm";
 import { db } from "../seed";
 
-export async function getSubjectList() {
+export async function getSubjectList(query: LessonQueryProps) {
   const result = await db
     .select()
     .from(lessons)
-    .where(eq(lessons.day, "monday"));
+    .where(
+      and(
+        eq(lessons.day, query.day),
+        eq(lessons.period, query.period),
+        eq(lessons.term, query.term),
+      ),
+    );
 
-  console.log(result);
+  console.log(JSON.stringify(result, null, 2));
 
   return result;
 }

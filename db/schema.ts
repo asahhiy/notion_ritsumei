@@ -6,7 +6,7 @@ export const lessons = sqliteTable("lessons", {
   instructor: text("instructor"),
   room: text("room"),
   syllabusUrl: text("syllabus_url"),
-  term: text("term"),
+  term: text("term"), //semesterと同義。定義ミスったわ
   day: text("day"),
   period: integer("period"), //1,2,3,4,5,6
 });

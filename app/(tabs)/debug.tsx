@@ -13,7 +13,13 @@ export default function DebugScreen() {
 
       <Button
         title="SQLiteいじっちゃう//"
-        onPress={async () => await getSubjectList()}
+        onPress={async () =>
+          await getSubjectList({
+            day: "monday",
+            period: 1,
+            term: "spring",
+          })
+        }
       />
       <Button
         title="Execute Seeding"

@@ -2,7 +2,7 @@ import { UpdateSubjectData } from "@/types/type";
 import getNotionClient from "./auth/getNotionClient";
 
 export async function updateLessonData(updateData: UpdateSubjectData) {
-  const notion = getNotionClient();
+  const notion = await getNotionClient();
 
   notion.pages.update({
     page_id: updateData.pageId,
