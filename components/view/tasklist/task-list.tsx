@@ -1,6 +1,7 @@
 import { SubjectData, TaskDetail } from "@/types/type";
 import { getSubjectDetail } from "@/utils/getsubjectdetail";
 import { FlashList } from "@shopify/flash-list";
+import { SymbolView } from "expo-symbols";
 import { useEffect, useState } from "react";
 import { Button, Text, View } from "react-native";
 
@@ -74,18 +75,35 @@ export default function TaskList({
           renderItem={({ item }) => (
             <View>
               {item.Status !== "完了" && item.IsDue !== "Passed" && (
-                <View className="justify-between p-2 bg-slate-300 rounded-md m-0.5">
-                  <Text className="text-xl font-semibold">{item.TaskName}</Text>
-                  <Text>{item.Status}</Text>
-                  <Text className="text-green-500">{item.Due}</Text>
+                <View className="flex flex-row items-center p-2 bg-slate-300 rounded-md m-0.5">
+                  <SymbolView
+                    name="exclamationmark.triangle"
+                    size={24}
+                    tintColor="#FFA500"
+                  />
+                  <View>
+                    <Text className="text-xl font-semibold">
+                      {item.TaskName}
+                    </Text>
+                    <Text>{item.Status}</Text>
+                    <Text className="text-green-500">{item.Due}</Text>
+                  </View>
                 </View>
               )}
               {item.IsDue === "Passed" && item.Status !== "完了" && (
-                <View className="justify-between p-2 bg-slate-300 rounded-md m-0.5">
-                  <Text className="text-red-500">期限超過</Text>
-                  <Text className="text-xl font-semibold">{item.TaskName}</Text>
-                  <Text>{item.Status}</Text>
-                  <Text className="text-red-500">{item.Due}</Text>
+                <View className="flex flex-row items-center p-2 bg-slate-300 rounded-md m-0.5">
+                  <SymbolView
+                    name="exclamationmark.triangle"
+                    size={24}
+                    tintColor="#FF0000"
+                  />
+                  <View className="ml-3">
+                    <Text className="text-xl font-semibold">
+                      {item.TaskName}
+                    </Text>
+                    <Text>{item.Status}</Text>
+                    <Text className="text-red-500">期限:{item.Due}</Text>
+                  </View>
                 </View>
               )}
             </View>
@@ -97,7 +115,7 @@ export default function TaskList({
           renderItem={({ item }) => (
             <View>
               {item.Status === "完了" && (
-                <View className="justify-between p-2 bg-slate-300 rounded-md m-0.5">
+                <View className="p-2 bg-slate-300 rounded-md m-0.5">
                   <Text className="text-green-500">完了</Text>
                   <Text className="text-xl font-semibold">{item.TaskName}</Text>
                   <Text>{item.Status}</Text>

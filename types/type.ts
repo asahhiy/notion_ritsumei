@@ -3,6 +3,7 @@ export type SubjectData = {
   subjectName: string;
   when: string;
   day: string;
+  place: string;
 };
 
 export const dayOrder: Record<string, number> = {

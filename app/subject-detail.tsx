@@ -7,13 +7,14 @@ import { Text, View } from "react-native";
 
 export default function SubjectDetailScreen() {
   const navigation = useNavigation();
-  const { pageId, subjectName, day, when } =
+  const { pageId, subjectName, day, when, place } =
     useLocalSearchParams() as SubjectData;
   const subjectData: SubjectData = {
     pageId,
     subjectName,
     day,
     when,
+    place,
   };
 
   useLayoutEffect(() => {

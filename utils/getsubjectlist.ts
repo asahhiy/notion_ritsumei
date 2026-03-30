@@ -28,12 +28,12 @@ export default async function getSubjectList() {
     let subjectName = "";
     // 2. 型ガード: プロパティが「title」型であるかをチェック
     if (subjectProp.type === "title") {
-      // titleは配列なので、mapを使って各要素の plain_text を抽出し、join("") で結合します
-      subjectName = subjectProp.title.map((t) => t.plain_text).join("") || "";
+      // titleは配列なので、mapを使って各要素の plain_text を抽出し、join("") で結合
+      subjectName = subjectProp.title.map((t) => t.plain_text).join("") || ""; //枠を維持するためスペースを入れる
     } else if (subjectProp.type === "rich_text") {
       // rich_text型の場合も同様に配列として処理
       subjectName =
-        subjectProp.rich_text.map((t) => t.plain_text).join("") || "未設定";
+        subjectProp.rich_text.map((t) => t.plain_text).join("") || "";
     }
     // --------------------------------------------------
     // When や Day (select型) の処理はそのまま（単一オブジェクトなので配列処理は不要）
@@ -50,11 +50,18 @@ export default async function getSubjectList() {
       day = dayProp.select?.name || "未設定";
     }
 
+    const placeProp = page.properties.Place;
+    let place = "未設定";
+    if (placeProp.type === "select") {
+      place = placeProp.select?.name || "未設定";
+    }
+
     formattedResults.push({
       pageId: page.id,
       subjectName,
       when,
       day,
+      place,
     });
   });
 
