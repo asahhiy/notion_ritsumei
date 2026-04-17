@@ -26,9 +26,6 @@ export default function SubjectDetailScreen() {
   return (
     <View className="flex-1">
       <UpdateLessonButton subjectData={subjectData} />
-      <Text className="text-center text-lg font-bold mb-4">
-        {subjectData.subjectName} - {subjectData.day}曜日 {subjectData.when}限目
-      </Text>
       <TaskList subjectData={subjectData} />
     </View>
   );

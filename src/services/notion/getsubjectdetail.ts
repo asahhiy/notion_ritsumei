@@ -1,5 +1,5 @@
 import { SubjectData, TaskDetail } from "@/types/type";
-import getNotionClient from "./auth/getNotionClient";
+import getNotionClient from "../services/auth/getNotionClient";
 
 export async function getSubjectDetail(
   subjectData: SubjectData,

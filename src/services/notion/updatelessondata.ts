@@ -1,5 +1,5 @@
-import { UpdateSubjectData } from "@/types/type";
-import getNotionClient from "./auth/getNotionClient";
+import { UpdateSubjectData } from "@/src/models/types/type";
+import getNotionClient from "../services/auth/getNotionClient";
 
 export async function updateLessonData(updateData: UpdateSubjectData) {
   const notion = await getNotionClient();

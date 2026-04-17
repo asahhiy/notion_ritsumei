@@ -1,5 +1,5 @@
-import { SubjectData, dayOrder } from "../types/type";
-import getNotionClient from "./auth/getNotionClient";
+import { SubjectData, dayOrder } from "../models/types/type";
+import getNotionClient from "../services/auth/getNotionClient";
 
 export default async function getSubjectList() {
   const notion = getNotionClient();
