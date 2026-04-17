@@ -9,6 +9,8 @@ export default function HomeScreen() {
       <Link
         className='items-center justify-center m-3 bg-slate-500'
         href="/modal">open modal</Link>
+
+
     </View>
   );
 }
