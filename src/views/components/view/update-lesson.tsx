@@ -1,4 +1,4 @@
-import { SubjectData } from "@/types/type";
+import { SubjectData } from "@/src/models/types/type";
 import { Link } from "expo-router";
 import { SymbolView } from "expo-symbols";
 import { Pressable, View } from "react-native";

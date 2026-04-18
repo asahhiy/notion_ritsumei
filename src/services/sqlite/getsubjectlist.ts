@@ -1,7 +1,7 @@
-import { lessons } from "@/db/schema";
-import { LessonQueryProps } from "@/types/type";
+import { lessons } from "@/src/services/db/schema";
+import { LessonQueryProps } from "@/src/models/types/type";
 import { and, eq } from "drizzle-orm";
-import { db } from "../seed";
+import { db } from "@/src/services/db/seed";
 
 export async function getSubjectList(query: LessonQueryProps) {
   const result = await db

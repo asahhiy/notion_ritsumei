@@ -1,5 +1,5 @@
-import { SubjectData, TaskDetail } from "@/types/type";
-import getNotionClient from "../services/auth/getNotionClient";
+import { SubjectData, TaskDetail } from "@/src/models/types/type";
+import getNotionClient from "@/src/services/auth/getNotionClient";
 
 export async function getSubjectDetail(
   subjectData: SubjectData,

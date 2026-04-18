@@ -1,5 +1,5 @@
-import { SubjectData } from "@/types/type";
-import { getSubjectDetail } from "@/utils/getsubjectdetail";
+import { SubjectData } from "@/src/models/types/type";
+import { getSubjectDetail } from "@/src/services/notion/getsubjectdetail";
 import { Picker } from "@react-native-picker/picker";
 import { useState } from "react";
 import { Button, View } from "react-native";
@@ -38,6 +38,7 @@ export default function ClassNumberPicker() {
             subjectName: "Sample Subject",
             day: selectedDay,
             when: selectedNumber,
+            place: "未設定",
           };
 
           await getSubjectDetail(subjectData);

@@ -1,6 +1,6 @@
 import { allSubjectData_2026_spring } from "@/data/allsubejctdata_2026_spring";
-import { lessons } from "@/db/schema"; //schemaファイル
-import { migrateDatabase } from "@/utils/migrate";
+import { lessons } from "@/src/services/db/schema"; //schemaファイル
+import { migrateDatabase } from "@/src/services/db/migrate";
 import { drizzle } from "drizzle-orm/expo-sqlite";
 import * as SQLite from "expo-sqlite";
 

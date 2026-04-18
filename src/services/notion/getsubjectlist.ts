@@ -1,5 +1,5 @@
-import { SubjectData, dayOrder } from "../models/types/type";
-import getNotionClient from "../services/auth/getNotionClient";
+import { SubjectData, dayOrder } from "@/src/models/types/type";
+import getNotionClient from "@/src/services/auth/getNotionClient";
 
 export default async function getSubjectList() {
   const notion = getNotionClient();
@@ -75,7 +75,7 @@ export default async function getSubjectList() {
     const dayRankB = dayOrder[b.day.toLowerCase()] || 999;
     return dayRankA - dayRankB;
   });
-  console.log(sortedResults);
+  console.log(JSON.stringify(sortedResults, null, 2));
 
   return sortedResults;
 }

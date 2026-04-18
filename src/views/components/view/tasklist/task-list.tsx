@@ -1,5 +1,5 @@
-import { SubjectData, TaskDetail } from "@/types/type";
-import { getSubjectDetail } from "@/utils/getsubjectdetail";
+import { SubjectData, TaskDetail } from "@/src/models/types/type";
+import { getSubjectDetail } from "@/src/services/notion/getsubjectdetail";
 import { FlashList } from "@shopify/flash-list";
 import { SymbolView } from "expo-symbols";
 import { useEffect, useState } from "react";

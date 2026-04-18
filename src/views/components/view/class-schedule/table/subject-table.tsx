@@ -1,4 +1,4 @@
-import { SubjectData } from "@/types/type";
+import { SubjectData } from "@/src/models/types/type";
 import { FlashList } from "@shopify/flash-list";
 import { Link } from "expo-router";
 import { Text, View } from "react-native";

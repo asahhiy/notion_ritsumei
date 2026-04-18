@@ -1,6 +1,6 @@
-import TaskList from "@/components/view/tasklist/task-list";
-import UpdateLessonButton from "@/components/view/update-lesson";
-import { SubjectData } from "@/types/type";
+import TaskList from "@/src/views/components/view/tasklist/task-list";
+import UpdateLessonButton from "@/src/views/components/view/update-lesson";
+import { SubjectData } from "@/src/models/types/type";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import { useLayoutEffect } from "react";
 import { Text, View } from "react-native";

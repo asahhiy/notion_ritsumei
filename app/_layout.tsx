@@ -1,4 +1,4 @@
-import { seedDatabase } from "@/utils/seed";
+import { seedDatabase } from "@/src/services/db/seed";
 import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";

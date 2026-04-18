@@ -1,5 +1,5 @@
-import { LessonDataMasterProps } from "@/types/type";
-import { updateLessonData } from "@/utils/updatelessondata";
+import { LessonDataMasterProps } from "@/src/models/types/type";
+import { updateLessonData } from "@/src/services/notion/updatelessondata";
 import { FlashList } from "@shopify/flash-list";
 import { useState } from "react";
 import { Alert, Pressable, Text, View } from "react-native";

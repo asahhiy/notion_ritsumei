@@ -2,8 +2,8 @@ import { Text, View, Button } from "react-native"
 import DayDisplay from "./table/daydisplay"
 import TimeDisplay from "./table/timedisplay"
 import SubjectTable from "./table/subject-table"
-import getSubjectList from "@/utils/getsubjectlist"
-import { SubjectData } from "@/types/type"
+import getSubjectList from "@/src/services/notion/getsubjectlist"
+import { SubjectData } from "@/src/models/types/type"
 import { useEffect, useState } from "react"
 
 export default function ClassTable() {
