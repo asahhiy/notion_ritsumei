@@ -1,7 +1,7 @@
-import ClassNumberPicker from "@/components/debug/class-number-picker";
-import { seedDatabase } from "@/utils/seed";
-import { getSubjectList } from "@/utils/sqlite/getsubjectlist";
-import { updateLessonData } from "@/utils/updatelessondata";
+import ClassNumberPicker from "@/src/views/components/debug/class-number-picker";
+import { seedDatabase } from "@/src/services/db/seed";
+import { getSubjectList } from "@/src/services/sqlite/getsubjectlist";
+import { updateLessonData } from "@/src/services/notion/updatelessondata";
 import { Button, ScrollView, Text, View } from "react-native";
 
 export default function DebugScreen() {

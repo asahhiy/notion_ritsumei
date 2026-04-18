@@ -1,6 +1,6 @@
-import ClassMasterTable from "@/components/view/classmaster/classmastertable";
-import { LessonDataMasterProps, SubjectData } from "@/types/type";
-import { getSubjectList } from "@/utils/sqlite/getsubjectlist";
+import ClassMasterTable from "@/src/views/components/view/classmaster/classmastertable";
+import { LessonDataMasterProps, SubjectData } from "@/src/models/types/type";
+import { getSubjectList } from "@/src/services/sqlite/getsubjectlist";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
