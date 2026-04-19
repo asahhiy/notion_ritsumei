@@ -11,6 +11,14 @@ export const unstable_settings = {
   anchor: "(tabs)",
 };
 
+const customTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: '#F7F7F5',
+  },
+};
+
 export default function RootLayout() {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -28,7 +36,7 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={DefaultTheme}>
+    <ThemeProvider value={customTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen

@@ -3,16 +3,15 @@ import { View } from 'react-native';
 import ClassScheduleView from '@/src/views/components/view/class-schedule-view';
 import NextClassCard from '@/src/views/components/view/class-schedule/next-class-card';
 import TodayTaskCard from '@/src/views/components/view/class-schedule/today-task-view';
+import { ThemedView } from '@/src/views/components/themed-view';
 
 export default function HomeScreen() {
   return (
-    <View>
+    <ThemedView className="flex-1">
       <View style={{ height: 40 }} />
       <NextClassCard />
       <TodayTaskCard />
       <ClassScheduleView />
-
-    </View>
+    </ThemedView>
   );
 }
-

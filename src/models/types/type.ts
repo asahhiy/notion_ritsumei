@@ -52,3 +52,9 @@ export type LessonDataMasterProps = {
   day: string;
   period: number;
 };
+
+export type taskProps = {
+  re_Subject_id: string;
+  re_Subject_name: string;
+} & TaskDetail
+

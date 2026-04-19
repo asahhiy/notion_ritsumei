@@ -8,7 +8,19 @@ module.exports = {
   // ここにはNativeWindのTailwind用プリセットを指定します
   presets: [require("nativewind/preset")],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: "#000000",
+        secondary: "#37352F",
+        tertiary: "#6B6B6B",
+        neutral: "#F7F7F5",
+
+      },
+      fontFamily: {
+        inter: ["Inter-Regular", "sans-serif"],
+        "inter-bold": ["Inter-Bold", "sans-serif"],
+      }
+    },
   },
   plugins: [],
 }
