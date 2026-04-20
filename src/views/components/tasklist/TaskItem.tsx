@@ -45,7 +45,7 @@ export function TaskItem(taskProps: taskProps) {
       <View className="mx-4 my-1 flex flex-row shadow-sm
         border-primary rounded-r-lg">
         <View
-          className="bg-red-600 w-[3px]"
+          className="bg-red-400 w-[3px]"
         />
 
         <View className="bg-white p-4 flex-1 overflow-hidden rounded-r-lg">
@@ -67,9 +67,9 @@ export function TaskItem(taskProps: taskProps) {
 
 
             <View className="flex-row items-center">
-              <Ionicons name="calendar-outline" size={20} color="black" />
+              <Ionicons name="calendar-outline" size={20} color="red" />
 
-              <Text className="ml-1">
+              <Text className="ml-1 text-red-400">
                 {taskProps.Due}
               </Text>
             </View>
