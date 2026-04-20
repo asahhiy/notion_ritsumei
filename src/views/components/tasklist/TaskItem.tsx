@@ -6,9 +6,10 @@ export function TaskItem(taskProps: taskProps) {
 
 
   if (taskProps.Status === "完了") {
+    //終わったやつ
     return (
       <View className="mx-4 my-1">
-        <View className="bg-secondary/5 border-primary border rounded-md p-4">
+        <View className="bg-gray-100 rounded-md p-4 shadow-sm">
           <Text className="text-lg font-inter-bold line-through text-zinc-500">{taskProps.TaskName}</Text>
 
           <View className="flex flex-row justify-between">
@@ -39,9 +40,10 @@ export function TaskItem(taskProps: taskProps) {
 
     )
   } else if (taskProps.Due !== "完了" && taskProps.IsDue === "Passed") {
+    //期限すぎてて終わってないやつ
     return (
-      <View className="mx-4 my-1 flex flex-row
-        border-primary border rounded-r-lg">
+      <View className="mx-4 my-1 flex flex-row shadow-sm
+        border-primary rounded-r-lg">
         <View
           className="bg-red-600 w-[3px]"
         />
@@ -77,10 +79,10 @@ export function TaskItem(taskProps: taskProps) {
 
     )
   } else {
-
+    //通常の見た目（期限超過も完了もしてないやつ）
     return (
       <View className="mx-4 my-1">
-        <View className="bg-white border-primary border rounded-md p-4">
+        <View className="bg-white rounded-md p-4 shadow-sm">
           <Text className="text-lg font-inter-bold">{taskProps.TaskName}</Text>
 
           <View className="flex flex-row justify-between">
