@@ -4,6 +4,7 @@ import { FlashList } from "@shopify/flash-list";
 import { SymbolView } from "expo-symbols";
 import { useEffect, useState } from "react";
 import { Button, Text, View } from "react-native";
+import { TaskItem } from "../../tasklist/TaskItem";
 
 export default function TaskList({
   subjectData,
@@ -91,20 +92,14 @@ export default function TaskList({
                 </View>
               )}
               {item.IsDue === "Passed" && item.Status !== "完了" && (
-                <View className="flex flex-row items-center p-2 bg-slate-300 rounded-md m-0.5">
-                  <SymbolView
-                    name="exclamationmark.triangle"
-                    size={24}
-                    tintColor="#FF0000"
-                  />
-                  <View className="ml-3">
-                    <Text className="text-xl font-semibold">
-                      {item.TaskName}
-                    </Text>
-                    <Text>{item.Status}</Text>
-                    <Text className="text-red-500">期限:{item.Due}</Text>
-                  </View>
-                </View>
+                <TaskItem
+                  re_Subject_name=""
+                  re_Subject_id=""
+                  TaskName={item.TaskName}
+                  Due={item.Due}
+                  IsDue={item.IsDue}
+                  Status={item.Status}
+                />
               )}
             </View>
           )}
@@ -115,12 +110,15 @@ export default function TaskList({
           renderItem={({ item }) => (
             <View>
               {item.Status === "完了" && (
-                <View className="p-2 bg-slate-300 rounded-md m-0.5">
-                  <Text className="text-green-500">完了</Text>
-                  <Text className="text-xl font-semibold">{item.TaskName}</Text>
-                  <Text>{item.Status}</Text>
-                  <Text className="text-green-500">{item.Due}</Text>
-                </View>
+                <TaskItem
+                  re_Subject_name=""
+                  re_Subject_id=""
+                  TaskName={item.TaskName}
+                  Due={item.Due}
+                  IsDue={item.IsDue}
+                  Status={item.Status}
+                />
+
               )}
             </View>
           )}
