@@ -40,15 +40,16 @@ export function TaskItem(taskProps: taskProps) {
     )
   } else if (taskProps.Due !== "完了" && taskProps.IsDue === "Passed") {
     return (
-      <View className="mx-4 my-1 flex flex-row border-primary border rounded-r-md overflow-hidden">
+      <View className="mx-4 my-1 flex flex-row
+        border-primary border rounded-r-lg">
         <View
-          className="bg-red-600 w-[6px]"
+          className="bg-red-600 w-[3px]"
         />
 
-        <View className="bg-white p-4 flex-1">
+        <View className="bg-white p-4 flex-1 overflow-hidden rounded-r-lg">
           <Text className="text-lg font-inter-bold">{taskProps.TaskName}</Text>
 
-          <View className="flex flex-row justify-between">
+          <View className="flex flex-row justify-between flex-shrink">
 
             {taskProps.re_Subject_name !== "" ? (
 
