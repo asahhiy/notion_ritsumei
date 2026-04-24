@@ -1,7 +1,6 @@
 import { SubjectData, TaskDetail } from "@/src/models/types/type";
 import { getSubjectDetail } from "@/src/services/notion/getsubjectdetail";
 import { FlashList } from "@shopify/flash-list";
-import { SymbolView } from "expo-symbols";
 import { useEffect, useState } from "react";
 import { Button, Text, View } from "react-native";
 import { TaskItem } from "../../tasklist/TaskItem";
@@ -74,55 +73,17 @@ export default function TaskList({
         <FlashList
           data={taskList}
           renderItem={({ item }) => (
-            <View>
-              {item.Status !== "完了" && item.IsDue !== "Passed" && (
-                <View className="flex flex-row items-center p-2 bg-slate-300 rounded-md m-0.5">
-                  <SymbolView
-                    name="exclamationmark.triangle"
-                    size={24}
-                    tintColor="#FFA500"
-                  />
-                  <View>
-                    <Text className="text-xl font-semibold">
-                      {item.TaskName}
-                    </Text>
-                    <Text>{item.Status}</Text>
-                    <Text className="text-green-500">{item.Due}</Text>
-                  </View>
-                </View>
-              )}
-              {item.IsDue === "Passed" && item.Status !== "完了" && (
-                <TaskItem
-                  re_Subject_name=""
-                  re_Subject_id=""
-                  TaskName={item.TaskName}
-                  Due={item.Due}
-                  IsDue={item.IsDue}
-                  Status={item.Status}
-                />
-              )}
-            </View>
+            <TaskItem
+              re_Subject_name=""
+              re_Subject_id=""
+              TaskName={item.TaskName}
+              Due={item.Due}
+              IsDue={item.IsDue}
+              Status={item.Status}
+            />
           )}
         />
         <View className="h-[50px]" />
-        <FlashList
-          data={taskList}
-          renderItem={({ item }) => (
-            <View>
-              {item.Status === "完了" && (
-                <TaskItem
-                  re_Subject_name=""
-                  re_Subject_id=""
-                  TaskName={item.TaskName}
-                  Due={item.Due}
-                  IsDue={item.IsDue}
-                  Status={item.Status}
-                />
-
-              )}
-            </View>
-          )}
-        />
       </View>
     </View>
   );
