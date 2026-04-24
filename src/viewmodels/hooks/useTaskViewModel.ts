@@ -1,38 +1,49 @@
-import { useState, useMemo } from "react";
-import { taskProps } from "@/src/models/types/type";
-import getSubjectList from "@/src/services/notion/getsubjectlist";
+import { SubjectData, taskProps } from "@/src/models/types/type";
 import { getSubjectDetail } from "@/src/services/notion/getsubjectdetail";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
-
-export const useTaskViewModel = (initialTasks: taskProps[]) => {
-  const [tasks, setTasks] = useState<taskProps[]>(initialTasks)
+//この関数は科目からタスクが出るので、科目名はあえて渡さない
+export const useTaskViewModel = (subjectData: SubjectData) => {
+  const [tasks, setTasks] = useState<taskProps[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [isError, setIsError] = useState(false)
 
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setIsLoading(true)
+    setIsError(false)
+
     try {
+      const detailTasks = await getSubjectDetail(subjectData)
+      const mappedTasks: taskProps[] = detailTasks.map((task) => ({
+        ...task,
+        pageId: undefined,
+        re_Subject_id: subjectData.pageId ?? "",
+        re_Subject_name: "",
+      }))
+
+      setTasks(mappedTasks)
     } catch {
       setIsError(true)
     } finally {
       setIsLoading(false)
     }
+  }, [subjectData])
 
-
-  }
+  useEffect(() => {
+    fetchData()
+  }, [fetchData])
 
 
   const activeTasks = useMemo(() => {
-    tasks.filter(task => task.Status !== "完了")
+    return tasks.filter(task => task.Status !== "完了")
   }, [tasks])
 
   const completedTasks = useMemo(() => {
-    tasks.filter(task => task.Status === "完了")
+    return tasks.filter(task => task.Status === "完了")
   }, [tasks])
 
   const overDueTasks = useMemo(() => {
-    tasks.filter(task => task.Status !== "完了" && task.IsDue === "passed")
+    return tasks.filter(task => task.Status !== "完了" && task.IsDue === "Passed")
   }, [tasks])
 
 
@@ -44,5 +55,14 @@ export const useTaskViewModel = (initialTasks: taskProps[]) => {
     ))
   }
 
-  return { activeTasks, completedTasks, overDueTasks, toggleComplete }
+  return {
+    tasks,
+    activeTasks,
+    completedTasks,
+    overDueTasks,
+    isLoading,
+    isError,
+    refetch: fetchData,
+    toggleComplete,
+  }
 }

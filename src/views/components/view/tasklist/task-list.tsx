@@ -1,7 +1,6 @@
-import { SubjectData, TaskDetail } from "@/src/models/types/type";
-import { getSubjectDetail } from "@/src/services/notion/getsubjectdetail";
+import { SubjectData } from "@/src/models/types/type";
+import { useTaskViewModel } from "@/src/viewmodels/hooks/useTaskViewModel";
 import { FlashList } from "@shopify/flash-list";
-import { useEffect, useState } from "react";
 import { Button, Text, View } from "react-native";
 import { TaskItem } from "../../tasklist/TaskItem";
 
@@ -10,24 +9,7 @@ export default function TaskList({
 }: {
   subjectData: SubjectData;
 }) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
-  const [taskList, setTaskList] = useState<TaskDetail[]>([]);
-  const fetchData = async () => {
-    try {
-      const data: TaskDetail[] = await getSubjectDetail(subjectData);
-      setTaskList(data);
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error fetching subject detail:", error);
-      setIsLoading(false);
-      setIsError(true);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const { tasks, isLoading, isError, refetch } = useTaskViewModel(subjectData);
 
   //Loading処理とerror処理
   if (isLoading) {
@@ -43,15 +25,14 @@ export default function TaskList({
         <Button
           title="Retry"
           onPress={() => {
-            setIsLoading(true);
-            setIsError(false);
+            refetch();
           }}
         />
       </View>
     );
   }
 
-  if (taskList.length === 0) {
+  if (tasks.length === 0) {
     return (
       <View>
         <Text>現在この科目にはタスクがありません。</Text>
@@ -65,21 +46,14 @@ export default function TaskList({
         <Button
           title="タスクデータ更新"
           onPress={async () => {
-            setIsError(false);
-            setIsLoading(true);
-            await fetchData();
+            await refetch();
           }}
         />
         <FlashList
-          data={taskList}
+          data={tasks}
           renderItem={({ item }) => (
             <TaskItem
-              re_Subject_name=""
-              re_Subject_id=""
-              TaskName={item.TaskName}
-              Due={item.Due}
-              IsDue={item.IsDue}
-              Status={item.Status}
+              {...item}
             />
           )}
         />
