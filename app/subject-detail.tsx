@@ -1,12 +1,11 @@
+import { SubjectData } from "@/src/models/types/type";
 import TaskList from "@/src/views/components/view/tasklist/task-list";
 import UpdateLessonButton from "@/src/views/components/view/update-lesson";
-import { SubjectData } from "@/src/models/types/type";
-import { useLocalSearchParams, useNavigation } from "expo-router";
-import { useLayoutEffect } from "react";
-import { Text, View } from "react-native";
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
+import { View } from "react-native";
 
 export default function SubjectDetailScreen() {
-  const navigation = useNavigation();
+  const router = useRouter();
   const { pageId, subjectName, day, when, place } =
     useLocalSearchParams() as SubjectData;
   const subjectData: SubjectData = {
@@ -17,15 +16,23 @@ export default function SubjectDetailScreen() {
     place,
   };
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      title: subjectData.subjectName,
-    });
-  });
-
   return (
     <View className="flex-1">
-      <UpdateLessonButton subjectData={subjectData} />
+      <Stack.Screen options={{ title: subjectData.subjectName }} />
+      <UpdateLessonButton
+        subjectData={subjectData}
+        onPress={() => {
+          router.push({
+            pathname: "/editsubjectdetail",
+            params: {
+              pageId: subjectData.pageId,
+              subjectName: subjectData.subjectName,
+              day: subjectData.day,
+              when: subjectData.when,
+            },
+          });
+        }}
+      />
       <TaskList subjectData={subjectData} />
     </View>
   );

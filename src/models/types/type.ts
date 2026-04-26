@@ -16,6 +16,7 @@ export const dayOrder: Record<string, number> = {
 
 //Notion側のカラム名と一致する必要がある
 export type TaskDetail = {
+  pageId?: string;
   TaskName: string;
   Status: string;
   Due: string;
@@ -52,3 +53,10 @@ export type LessonDataMasterProps = {
   day: string;
   period: number;
 };
+
+export type taskProps = {
+  re_Subject_id: string;
+  re_Subject_name: string;
+  pageId?: string
+} & TaskDetail
+

@@ -10,8 +10,8 @@ export default function TabLayout() {
         <Icon sf="book.pages.fill" drawable="custom_android_drawable" />
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="add">
-        <Icon sf="plus.circle" drawable="custom_settings_drawable" />
-        <Label>Add</Label>
+        <Icon sf="checklist" drawable="custom_settings_drawable" />
+        <Label>Tasks</Label>
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="settings">
         <Icon sf="gear" drawable="custom_settings_drawable" />

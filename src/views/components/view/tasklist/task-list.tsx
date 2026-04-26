@@ -1,33 +1,18 @@
-import { SubjectData, TaskDetail } from "@/src/models/types/type";
-import { getSubjectDetail } from "@/src/services/notion/getsubjectdetail";
+import { SubjectData } from "@/src/models/types/type";
+import { useTaskViewModel } from "@/src/viewmodels/hooks/useTaskViewModel";
 import { FlashList } from "@shopify/flash-list";
-import { SymbolView } from "expo-symbols";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Text, View } from "react-native";
+import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
+import { TaskItem } from "../../tasklist/TaskItem";
 
 export default function TaskList({
   subjectData,
 }: {
   subjectData: SubjectData;
 }) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
-  const [taskList, setTaskList] = useState<TaskDetail[]>([]);
-  const fetchData = async () => {
-    try {
-      const data: TaskDetail[] = await getSubjectDetail(subjectData);
-      setTaskList(data);
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error fetching subject detail:", error);
-      setIsLoading(false);
-      setIsError(true);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const { tasks, isLoading, isError, refetch, toggleComplete } = useTaskViewModel(subjectData);
+  const [isSwipeEnabled, setIsSwipeEnabled] = useState(true)
 
   //Loading処理とerror処理
   if (isLoading) {
@@ -43,15 +28,14 @@ export default function TaskList({
         <Button
           title="Retry"
           onPress={() => {
-            setIsLoading(true);
-            setIsError(false);
+            refetch();
           }}
         />
       </View>
     );
   }
 
-  if (taskList.length === 0) {
+  if (tasks.length === 0) {
     return (
       <View>
         <Text>現在この科目にはタスクがありません。</Text>
@@ -65,66 +49,44 @@ export default function TaskList({
         <Button
           title="タスクデータ更新"
           onPress={async () => {
-            setIsError(false);
-            setIsLoading(true);
-            await fetchData();
+            await refetch();
           }}
         />
+        {__DEV__ ? (
+          <Button
+            title={isSwipeEnabled ? "Swipeable: ON" : "Swipeable: OFF"}
+            onPress={() => {
+              setIsSwipeEnabled((prev) => !prev)
+            }}
+          />
+        ) : null}
         <FlashList
-          data={taskList}
-          renderItem={({ item }) => (
-            <View>
-              {item.Status !== "完了" && item.IsDue !== "Passed" && (
-                <View className="flex flex-row items-center p-2 bg-slate-300 rounded-md m-0.5">
-                  <SymbolView
-                    name="exclamationmark.triangle"
-                    size={24}
-                    tintColor="#FFA500"
-                  />
-                  <View>
-                    <Text className="text-xl font-semibold">
-                      {item.TaskName}
-                    </Text>
-                    <Text>{item.Status}</Text>
-                    <Text className="text-green-500">{item.Due}</Text>
+          data={tasks}
+          keyExtractor={(item, index) => item.pageId ?? `${item.TaskName}-${index}`}
+          renderItem={({ item }) => {
+            if (!isSwipeEnabled || !item.pageId) {
+              return <TaskItem {...item} />
+            }
+
+            return (
+              <ReanimatedSwipeable
+                friction={2}
+                rightThreshold={32}
+                renderRightActions={() => (
+                  <View className="my-1 mr-4 w-[96px] items-center justify-center rounded-md bg-green-500">
+                    <Text className="font-inter-bold text-white">完了</Text>
                   </View>
-                </View>
-              )}
-              {item.IsDue === "Passed" && item.Status !== "完了" && (
-                <View className="flex flex-row items-center p-2 bg-slate-300 rounded-md m-0.5">
-                  <SymbolView
-                    name="exclamationmark.triangle"
-                    size={24}
-                    tintColor="#FF0000"
-                  />
-                  <View className="ml-3">
-                    <Text className="text-xl font-semibold">
-                      {item.TaskName}
-                    </Text>
-                    <Text>{item.Status}</Text>
-                    <Text className="text-red-500">期限:{item.Due}</Text>
-                  </View>
-                </View>
-              )}
-            </View>
-          )}
+                )}
+                onSwipeableWillOpen={() => {
+                  void toggleComplete(item.pageId as string)
+                }}
+              >
+                <TaskItem {...item} />
+              </ReanimatedSwipeable>
+            )
+          }}
         />
         <View className="h-[50px]" />
-        <FlashList
-          data={taskList}
-          renderItem={({ item }) => (
-            <View>
-              {item.Status === "完了" && (
-                <View className="p-2 bg-slate-300 rounded-md m-0.5">
-                  <Text className="text-green-500">完了</Text>
-                  <Text className="text-xl font-semibold">{item.TaskName}</Text>
-                  <Text>{item.Status}</Text>
-                  <Text className="text-green-500">{item.Due}</Text>
-                </View>
-              )}
-            </View>
-          )}
-        />
       </View>
     </View>
   );
