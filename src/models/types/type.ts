@@ -16,6 +16,7 @@ export const dayOrder: Record<string, number> = {
 
 //Notion側のカラム名と一致する必要がある
 export type TaskDetail = {
+  pageId?: string;
   TaskName: string;
   Status: string;
   Due: string;

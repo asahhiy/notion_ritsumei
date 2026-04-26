@@ -71,6 +71,7 @@ export async function getSubjectDetail(
     const isDue = properties["IsDue"]?.formula?.string || "NotDefined";
 
     return {
+      pageId: page.id,
       TaskName: taskName,
       Status: status,
       Due: due,

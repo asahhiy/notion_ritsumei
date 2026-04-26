@@ -1,7 +1,9 @@
 import { SubjectData } from "@/src/models/types/type";
 import { useTaskViewModel } from "@/src/viewmodels/hooks/useTaskViewModel";
 import { FlashList } from "@shopify/flash-list";
+import { useState } from "react";
 import { Button, Text, View } from "react-native";
+import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 import { TaskItem } from "../../tasklist/TaskItem";
 
 export default function TaskList({
@@ -9,7 +11,8 @@ export default function TaskList({
 }: {
   subjectData: SubjectData;
 }) {
-  const { tasks, isLoading, isError, refetch } = useTaskViewModel(subjectData);
+  const { tasks, isLoading, isError, refetch, toggleComplete } = useTaskViewModel(subjectData);
+  const [isSwipeEnabled, setIsSwipeEnabled] = useState(true)
 
   //Loading処理とerror処理
   if (isLoading) {
@@ -49,13 +52,39 @@ export default function TaskList({
             await refetch();
           }}
         />
+        {__DEV__ ? (
+          <Button
+            title={isSwipeEnabled ? "Swipeable: ON" : "Swipeable: OFF"}
+            onPress={() => {
+              setIsSwipeEnabled((prev) => !prev)
+            }}
+          />
+        ) : null}
         <FlashList
           data={tasks}
-          renderItem={({ item }) => (
-            <TaskItem
-              {...item}
-            />
-          )}
+          keyExtractor={(item, index) => item.pageId ?? `${item.TaskName}-${index}`}
+          renderItem={({ item }) => {
+            if (!isSwipeEnabled || !item.pageId) {
+              return <TaskItem {...item} />
+            }
+
+            return (
+              <ReanimatedSwipeable
+                friction={2}
+                rightThreshold={32}
+                renderRightActions={() => (
+                  <View className="my-1 mr-4 w-[96px] items-center justify-center rounded-md bg-green-500">
+                    <Text className="font-inter-bold text-white">完了</Text>
+                  </View>
+                )}
+                onSwipeableWillOpen={() => {
+                  void toggleComplete(item.pageId as string)
+                }}
+              >
+                <TaskItem {...item} />
+              </ReanimatedSwipeable>
+            )
+          }}
         />
         <View className="h-[50px]" />
       </View>

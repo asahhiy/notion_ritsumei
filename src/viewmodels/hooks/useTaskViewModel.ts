@@ -1,5 +1,6 @@
 import { SubjectData, taskProps } from "@/src/models/types/type";
 import { getSubjectDetail } from "@/src/services/notion/getsubjectdetail";
+import { updateTaskStatus } from "@/src/services/notion/updateTaskStatus";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 //この関数は科目からタスクが出るので、科目名はあえて渡さない
@@ -16,13 +17,14 @@ export const useTaskViewModel = (subjectData: SubjectData) => {
       const detailTasks = await getSubjectDetail(subjectData)
       const mappedTasks: taskProps[] = detailTasks.map((task) => ({
         ...task,
-        pageId: undefined,
+        pageId: task.pageId,
         re_Subject_id: subjectData.pageId ?? "",
         re_Subject_name: "",
       }))
 
       setTasks(mappedTasks)
-    } catch {
+    } catch (error) {
+      console.error("Failed to fetch tasks", error)
       setIsError(true)
     } finally {
       setIsLoading(false)
@@ -47,13 +49,34 @@ export const useTaskViewModel = (subjectData: SubjectData) => {
   }, [tasks])
 
 
-  const toggleComplete = (pageId: string) => {
+  const toggleComplete = useCallback(async (pageId: string) => {
+    const targetTask = tasks.find(task => task.pageId === pageId)
+    if (!targetTask) {
+      return
+    }
+
+    const previousStatus = targetTask.Status
+    const nextStatus = previousStatus === "完了" ? "未着手" : "完了"
+
     setTasks(prev => prev.map(
-      t => t.pageId === pageId ? {
-        ...t, Status: t.Status === "完了" ? "未完了" : "完了"
-      } : t
+      task => task.pageId === pageId ? {
+        ...task,
+        Status: nextStatus,
+      } : task
     ))
-  }
+
+    try {
+      await updateTaskStatus(pageId, nextStatus)
+    } catch (error) {
+      setTasks(prev => prev.map(
+        task => task.pageId === pageId ? {
+          ...task,
+          Status: previousStatus,
+        } : task
+      ))
+      console.error("Failed to update task status", error)
+    }
+  }, [tasks])
 
   return {
     tasks,
